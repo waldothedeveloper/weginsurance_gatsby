@@ -1,3 +1,4 @@
+import LandingPage from "../components/landingPage";
 import Layout from "../components/layout";
 import React from "react";
 
@@ -5,9 +6,7 @@ import React from "react";
 const IndexPage = () => (
   <main>
     <Layout>
-      <h1 className="text-7xl font-bold text-green-500 underline">
-        I am the Layout!
-      </h1>
+      <LandingPage />
     </Layout>
   </main>
 );

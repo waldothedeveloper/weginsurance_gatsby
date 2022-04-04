@@ -1,7 +1,14 @@
 {
   "parser": "@babel/eslint-parser",
-  "extends": ["eslint:recommended", "plugin:react/recommended", "prettier"],
-  "plugins": ["react", "@babel", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "plugin:react-hooks/recommended",
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/react"
+  ],
+  "plugins": ["react", "@babel", "prettier", "testing-library", "jest-dom"],
   "parserOptions": {
     "ecmaVersion": 2016,
     "sourceType": "module",
@@ -66,7 +73,8 @@
     "react/display-name": "off",
     "react/jsx-key": "warn",
     "react/no-unescaped-entities": "off",
-    "react/prop-types": "off",
+    "react/prop-types": 2,
+    "react/destructuring-assignment": 2,
     "require-jsdoc": "off",
     "valid-jsdoc": "off",
     "prefer-promise-reject-errors": "warn",
@@ -90,5 +98,14 @@
     "react": {
       "version": "17.0.1"
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ]
 }
