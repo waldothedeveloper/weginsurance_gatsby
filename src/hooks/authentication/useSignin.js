@@ -34,14 +34,15 @@ export const useSignIn = () => {
     if (event) event.preventDefault();
 
     signInWithEmailAndPassword(auth, email, password)
+      // eslint-disable-next-line no-unused-vars
       .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(`user: `, user);
+        // const user = userCredential.user;
+        // console.log(`user: `, user);
         // ! redirect to admin page
       })
       .catch((error) => {
         const { code } = error;
-        console.log(`code: `, code);
+        // console.log(`code: `, code);
 
         switch (code) {
           case `auth/wrong-password`:
