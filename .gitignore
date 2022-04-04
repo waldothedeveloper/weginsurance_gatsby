@@ -2,3 +2,7 @@ node_modules/
 .cache/
 public
 .DS_Store
+.env.*
+jestEnvVars.js
+firebase-debug.log
+.log*
