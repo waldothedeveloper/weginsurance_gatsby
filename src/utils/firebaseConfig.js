@@ -10,4 +10,6 @@ const firebaseConfig = {
   appId: process.env.GATSBY_MESSAGING_APP_ID,
 };
 
-export const app = initializeApp(firebaseConfig);
+export const isBrowser = typeof window !== `undefined`;
+
+export const app = isBrowser ? initializeApp(firebaseConfig) : {};

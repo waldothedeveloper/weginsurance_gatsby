@@ -19,6 +19,10 @@ module.exports = {
   },
   testURL: `http://localhost`,
   setupFiles: [`<rootDir>/loadershim.js`],
+  clearMocks: true,
   testEnvironment: `jsdom`,
-  setupFilesAfterEnv: [`<rootDir>/setup-test-env.js`],
+  setupFilesAfterEnv: [
+    `<rootDir>/setup-test-env.js`,
+    `<rootDir>/jestEnvVars.js`,
+  ],
 };
