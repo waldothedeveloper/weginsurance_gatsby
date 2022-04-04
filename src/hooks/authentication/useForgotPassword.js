@@ -12,7 +12,7 @@ export const useForgotPassword = () => {
   const [email, setEmail] = useState(``);
   const [error, setError] = useState(null);
   const [authErrors, setAuthErrors] = useState(``);
-  const [subMissionHasErrors, setSubmissionHasErrors] = useState(false);
+  const [openCloseNotification, setOpenCloseNotification] = useState(false);
 
   useEffect(() => {
     if (!validEmailRegex.test(email)) {
@@ -41,18 +41,18 @@ export const useForgotPassword = () => {
       })
       .catch((error) => {
         const { code } = error;
-        console.log(`code: `, code);
+        // console.log(`code: `, code);
 
         switch (code) {
           case `auth/user-not-found`:
             setAuthErrors(`El usuario o correo electronico no existe.`);
-            setSubmissionHasErrors(true);
+            setOpenCloseNotification(true);
             break;
           default:
             setAuthErrors(
               `Ha ocurrido un error inesperado. Intentelo de nuevo mas tarde.`
             );
-            setSubmissionHasErrors(true);
+            setOpenCloseNotification(true);
             break;
         }
       });
@@ -64,7 +64,7 @@ export const useForgotPassword = () => {
     email,
     handleChange,
     authErrors,
-    subMissionHasErrors,
-    setSubmissionHasErrors,
+    openCloseNotification,
+    setOpenCloseNotification,
   };
 };

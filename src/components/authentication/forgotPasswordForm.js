@@ -13,8 +13,8 @@ export const ForgotPasswordForm = () => {
     email,
     handleChange,
     authErrors,
-    subMissionHasErrors,
-    setSubmissionHasErrors,
+    openCloseNotification,
+    setOpenCloseNotification,
   } = useForgotPassword();
   return (
     <>
@@ -110,8 +110,8 @@ export const ForgotPasswordForm = () => {
       {authErrors && (
         <Notifications
           authErrors={authErrors}
-          subMissionHasErrors={subMissionHasErrors}
-          setSubmissionHasErrors={setSubmissionHasErrors}
+          openCloseNotification={openCloseNotification}
+          setOpenCloseNotification={setOpenCloseNotification}
         />
       )}
     </>

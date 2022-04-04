@@ -12,9 +12,9 @@ const variants = {
 };
 
 const Notifications = ({
-  authErrors,
-  openCloseNotification,
-  setOpenCloseNotification,
+  authErrors: errors,
+  openCloseNotification: open,
+  setOpenCloseNotification: setOpen,
 }) => (
   <>
     {/* Global notification live region, render this permanently at the end of the document */}
@@ -26,7 +26,7 @@ const Notifications = ({
       <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
         {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
         <Transition
-          show={openCloseNotification}
+          show={open}
           as={Fragment}
           enter="transform ease-out duration-300 transition"
           enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -36,7 +36,7 @@ const Notifications = ({
           leaveTo="opacity-0"
         >
           <motion.div
-            animate={openCloseNotification ? `open` : `hidden`}
+            animate={open ? `open` : `hidden`}
             variants={variants}
             transition={{
               ease: `easeOut`,
@@ -56,14 +56,14 @@ const Notifications = ({
                 </div>
                 <div className="ml-3 w-0 flex-1 pt-0.5">
                   <p className="text-sm font-medium text-red-500">Error!</p>
-                  <p className="mt-1 text-sm text-red-500">{authErrors}</p>
+                  <p className="mt-1 text-sm text-red-500">{errors}</p>
                 </div>
                 <div className="ml-4 flex flex-shrink-0">
                   <button
                     data-testid="close-notification"
                     className="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     onClick={() => {
-                      setOpenCloseNotification(false);
+                      setOpen(false);
                     }}
                   >
                     <span className="sr-only">Close</span>
