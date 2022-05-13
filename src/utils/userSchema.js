@@ -1,0 +1,18 @@
+export const userSchema = {
+  first_name: ``,
+  secondary_name: ``,
+  lastname: ``,
+  second_lastname: ``,
+  email: ``,
+  phone: ``,
+  birthday: ``,
+  street_address: ``,
+  city: ``,
+  state: ``,
+  zipcode: ``,
+  insurance_date: ``,
+  insurance_policy_number: ``,
+  insurance_company: ``,
+  plan: ``,
+  notes: ``,
+};

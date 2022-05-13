@@ -10,15 +10,16 @@ auth.languageCode = `es`;
 
 export const useForgotPassword = () => {
   const [email, setEmail] = useState(``);
-  const [error, setError] = useState(null);
+  const [validationErrors, setValidationErrors] = useState(null);
   const [authErrors, setAuthErrors] = useState(``);
-  const [openCloseNotification, setOpenCloseNotification] = useState(false);
 
   useEffect(() => {
     if (!validEmailRegex.test(email)) {
-      setError(`El correo electronico debe contener un formato valido`);
+      setValidationErrors(
+        `El correo electronico debe contener un formato valido`
+      );
     } else {
-      setError(``);
+      setValidationErrors(``);
     }
   }, [email]);
 
@@ -41,18 +42,16 @@ export const useForgotPassword = () => {
       })
       .catch((error) => {
         const { code } = error;
-        // console.log(`code: `, code);
 
         switch (code) {
           case `auth/user-not-found`:
-            setAuthErrors(`El usuario o correo electronico no existe.`);
-            setOpenCloseNotification(true);
+            setAuthErrors(() => `El usuario o correo electronico no existe.`);
             break;
           default:
             setAuthErrors(
-              `Ha ocurrido un error inesperado. Intentelo de nuevo mas tarde.`
+              () =>
+                `Ha ocurrido un error inesperado. Intentelo de nuevo mas tarde.`
             );
-            setOpenCloseNotification(true);
             break;
         }
       });
@@ -60,11 +59,10 @@ export const useForgotPassword = () => {
 
   return {
     handleSubmit,
-    error,
+    validationErrors,
     email,
     handleChange,
     authErrors,
-    openCloseNotification,
-    setOpenCloseNotification,
+    setAuthErrors,
   };
 };

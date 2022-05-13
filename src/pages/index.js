@@ -1,13 +1,9 @@
-import LandingPage from "../components/landingPage";
-import Layout from "../components/layout";
+import Admin from "./admin";
 import React from "react";
 
-//
 const IndexPage = () => (
   <main>
-    <Layout>
-      <LandingPage />
-    </Layout>
+    <Admin />
   </main>
 );
 export default IndexPage;
