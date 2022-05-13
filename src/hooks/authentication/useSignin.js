@@ -2,6 +2,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 import { app } from "../../utils/firebaseConfig";
+import { navigate } from "gatsby";
 import { validEmailRegex } from "./validateEmailHelper";
 
 const auth = getAuth(app);
@@ -9,15 +10,16 @@ const auth = getAuth(app);
 export const useSignIn = () => {
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
-  const [error, setError] = useState(null);
-  const [authErrors, setAuthErrors] = useState(``);
-  const [openCloseNotification, setOpenCloseNotification] = useState(false);
+  const [validationErrors, setValidationErrors] = useState(null);
+  const [signInErrors, setSignInErrors] = useState(``);
 
   useEffect(() => {
-    if (!validEmailRegex.test(email)) {
-      setError(`El correo electronico debe contener un formato valido`);
+    if (email.length > 0 && !validEmailRegex.test(email)) {
+      setValidationErrors(
+        `El correo electronico debe contener un formato valido`
+      );
     } else {
-      setError(``);
+      setValidationErrors(``);
     }
   }, [email]);
 
@@ -39,6 +41,7 @@ export const useSignIn = () => {
         // const user = userCredential.user;
         // console.log(`user: `, user);
         // ! redirect to admin page
+        navigate(`/admin/dashboard`);
       })
       .catch((error) => {
         const { code } = error;
@@ -46,30 +49,30 @@ export const useSignIn = () => {
 
         switch (code) {
           case `auth/wrong-password`:
-            setAuthErrors(`La contraseña es incorrecta.`);
-            setOpenCloseNotification(true);
+            setSignInErrors(`La contraseña es incorrecta.`);
+
             break;
           case `auth/user-not-found`:
-            setAuthErrors(`El usuario es incorrecto o no existe.`);
-            setOpenCloseNotification(true);
+            setSignInErrors(`El usuario es incorrecto o no existe.`);
+
             break;
           case `auth/too-many-requests`:
-            setAuthErrors(
+            setSignInErrors(
               `Demasiados intentos fallidos, intente de nuevo mas tarde.`
             );
-            setOpenCloseNotification(true);
+
             break;
           case `auth/invalid-password`:
-            setAuthErrors(
+            setSignInErrors(
               `La contraseña es muy corta. Debe contener al menos 6 caracteres.`
             );
-            setOpenCloseNotification(true);
+
             break;
           default:
-            setAuthErrors(
+            setSignInErrors(
               `Ha ocurrido un error inesperado. Intentelo de nuevo mas tarde.`
             );
-            setOpenCloseNotification(true);
+
             break;
         }
       });
@@ -77,12 +80,11 @@ export const useSignIn = () => {
 
   return {
     handleSubmit,
-    error,
+    validationErrors,
     email,
     password,
     handleChange,
-    authErrors,
-    openCloseNotification,
-    setOpenCloseNotification,
+    signInErrors,
+    setSignInErrors,
   };
 };

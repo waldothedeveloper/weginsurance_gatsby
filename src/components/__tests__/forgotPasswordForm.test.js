@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 
 // import EmailSentSuccessfully from "../../pages/auth/emailSentSuccessfully";
 import { ForgotPasswordForm } from "../authentication/forgotPasswordForm";
-import Notifications from "../../components/notifications";
 import React from "react";
 import { navigate } from "gatsby";
 import userEvent from "@testing-library/user-event";
@@ -68,30 +67,4 @@ describe(`Forgot Password Form`, () => {
     expect(navigate).toHaveBeenCalledTimes(1);
     expect(navigate).toHaveBeenCalledWith(`/auth/login`);
   });
-
-  it(`should render Notifications component`, () => {
-    render(
-      <Notifications
-        authErrors="Some reset password server errors"
-        openCloseNotification={true}
-        setOpenCloseNotification={() => undefined}
-      />
-    );
-    const notifications = screen.getByTestId(`notifications`);
-
-    expect(notifications).toBeInTheDocument();
-  });
-
-  // it(`should navigate to /auth/email_sent_successfully when submit button is clicked`, async () => {
-  //   render(<ForgotPasswordForm />);
-  //   const inputEl = screen.getByTestId(`email-address`);
-  //   const button = screen.getByTestId(`submit-button`);
-
-  //   await user.type(inputEl, process.env.email);
-  //   await user.click(button);
-  //   await navigate(`/auth/email_sent_successfully`);
-
-  //   // expect(navigate).toHaveBeenCalledTimes(1);
-  //   expect(navigate).toHaveBeenCalledWith(`/auth/email_sent_successfully`);
-  // });
 });

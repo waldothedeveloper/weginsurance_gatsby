@@ -1,5 +1,7 @@
+import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
+//
 const firebaseConfig = {
   apiKey: process.env.GATSBY_APIKEY,
   authDomain: process.env.GATSBY_AUTHDOMAIN,
@@ -13,3 +15,5 @@ const firebaseConfig = {
 export const isBrowser = typeof window !== `undefined`;
 
 export const app = isBrowser ? initializeApp(firebaseConfig) : {};
+
+export const db = getFirestore(app);
