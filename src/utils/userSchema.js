@@ -15,4 +15,6 @@ export const userSchema = {
   insurance_company: ``,
   plan: ``,
   notes: ``,
+  chat_service_sid: ``,
+  identity: ``,
 };

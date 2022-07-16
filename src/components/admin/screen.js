@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { Chat } from "../chat/all";
+import { Chat } from "../chat/index";
 import PropTypes from "prop-types";
 import { Statistics } from "../statistics/all";
-import { UsersScreen } from "../users/screen";
+import { UsersScreen } from "../users/index";
 
 const Skeleton = ({ children }) => <main className="py-10">{children}</main>;
 
@@ -13,6 +13,8 @@ export const Screen = ({ module }) => {
   useEffect(() => {
     const currentModule = module.filter((item) => item.current)[0].name;
     setComponentToRender(currentModule);
+
+    return () => setComponentToRender(`Dashboard`);
   }, [module]);
 
   switch (componentToRender) {

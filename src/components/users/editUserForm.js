@@ -17,7 +17,7 @@ export const EditUserForm = ({
   const { color, handleFocus } = useRandomColor();
 
   return (
-    <div>
+    <div className="pb-44">
       <form className="space-y-8 divide-y divide-gray-200">
         <div className="space-y-8">
           <div className="pt-8">
@@ -440,7 +440,7 @@ export const EditUserForm = ({
               type="button"
               className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
-              Cancel
+              Cancelar
             </button>
             <button
               disabled={Object.keys(errors).length > 0}
@@ -451,7 +451,7 @@ export const EditUserForm = ({
                   : `ml-3 inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2`
               }
             >
-              Save
+              Guardar
             </button>
           </div>
         </div>

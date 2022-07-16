@@ -1,0 +1,430 @@
+import PropTypes from "prop-types";
+import React from "react";
+import { SelectInsuranceCompany } from "./SelectInsuranceCompany";
+import { classNames } from "../../utils/classNames";
+import { useCreateuser } from "../../hooks/user/useCreateuser";
+import { useRandomColor } from "../../hooks/user/useRandomColor";
+
+//
+export const UsersForm = ({ handleEditUser }) => {
+  const { color, handleFocus } = useRandomColor();
+  const { values, handleChange, handleSubmit } = useCreateuser();
+
+  return (
+    <div className="mb-28 mt-12">
+      <form className="space-y-8 divide-y divide-gray-200">
+        <div className="space-y-8">
+          <div className="pt-8">
+            <div>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Informacion Personal
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Datos personales del cliente
+              </p>
+            </div>
+            <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              {/* First and second names */}
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="first-name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Nombre
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.first_name || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type="text"
+                    name="first_name"
+                    id="first-name"
+                    autoComplete="given-name"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="second-name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Segundo nombre
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.secondary_name || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type="text"
+                    name="secondary_name"
+                    id="secondary_name"
+                    autoComplete="family-name"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+              {/* Lastname */}
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="last-name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Primer apellido
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.lastname || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type="text"
+                    name="lastname"
+                    id="lastname"
+                    autoComplete="family-name"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+              {/* Second lastname, people from many countries have two lastnames */}
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="second-lastname"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Segundo apellido
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.second_lastname || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type="text"
+                    name="second_lastname"
+                    id="second_lastname"
+                    autoComplete="family-name"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+              {/* electronic email */}
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Correo electronico
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.email || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+              {/* phone */}
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Telefono
+                </label>
+                <input
+                  value={values.phone || ``}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  placeholder="+1-786-521-3075"
+                  type="phone"
+                  name="phone"
+                  id="phone"
+                  autoComplete="tel"
+                  className={classNames(
+                    color,
+                    `mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                  )}
+                />
+              </div>
+              {/* Birthday */}
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="birthday"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Fecha de nacimiento
+                </label>
+                <input
+                  value={values.birthday || ``}
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  autoComplete="bday"
+                  type="date"
+                  name="birthday"
+                  id="birthday"
+                  className={classNames(
+                    color,
+                    `mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                  )}
+                />
+              </div>
+              {/* Personal Address */}
+              <div className="sm:col-span-6">
+                <label
+                  htmlFor="street-address"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Calle
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.street_address || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type="text"
+                    name="street_address"
+                    id="street_address"
+                    autoComplete="street-address"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="city"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Ciudad
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.city || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type="text"
+                    name="city"
+                    id="city"
+                    autoComplete="address-level2"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="region"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Estado / Provincia
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.state || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type="text"
+                    name="state"
+                    id="state"
+                    autoComplete="address-level1"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="postal-code"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  ZIP / Codigo Postal
+                </label>
+                <div className="mt-1">
+                  <input
+                    value={values.zipcode || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type="text"
+                    name="zipcode"
+                    id="zipcode"
+                    autoComplete="postal-code"
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-8">
+            <div>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Informacion de Poliza de Seguro
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Poliza de seguro elegida por el cliente.
+              </p>
+            </div>
+            {/* Insurance Policy */}
+            <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="fecha-de-inscripcion"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Fecha de inscripcion
+                </label>
+                <input
+                  value={values.insurance_date || ``}
+                  onFocus={handleFocus}
+                  onChange={handleChange}
+                  type="date"
+                  name="insurance_date"
+                  id="insurance_date"
+                  className={classNames(
+                    color,
+                    `mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                  )}
+                />
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="insurance_policy_number"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Numero de poliza
+                </label>
+                <input
+                  onFocus={handleFocus}
+                  placeholder="55-55-555"
+                  onChange={handleChange}
+                  value={values.insurance_policy_number || ``}
+                  type="number"
+                  name="insurance_policy_number"
+                  id="insurance_policy_number"
+                  autoComplete="family-name"
+                  className={classNames(
+                    color,
+                    `mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm`
+                  )}
+                />
+              </div>
+              {/* Companias de Seguros */}
+              <div className="sm:col-span-3">
+                <SelectInsuranceCompany
+                  handleSelectCompany={() => undefined}
+                  value={values.insurance_company || `test`}
+                />
+              </div>
+              <div className="sm:col-span-3">
+                <div>
+                  <label
+                    htmlFor="location"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Tipo de Plan
+                  </label>
+                  <select
+                    value={values.plan || `Basico`}
+                    onChange={handleChange}
+                    id="location"
+                    name="plan"
+                    className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-orange-500 focus:outline-none  focus:ring-orange-500 sm:text-sm"
+                  >
+                    <option value="Basico">Basico</option>
+                    <option value="Medio">Medio</option>
+                    <option value="Avanzado">Avanzado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Notas del cliente */}
+          <div className="pt-8">
+            <div>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Notas
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Aqui puede escribir anotaciones sobre el cliente
+              </p>
+            </div>
+            <div className="mt-5 md:col-span-2 md:mt-0">
+              <div className="sm:col-span-6">
+                <div className="mt-6">
+                  <textarea
+                    value={values.notes || ``}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    placeholder="Ejemplo: Renovar poliza cada 6 meses."
+                    id="notes"
+                    name="notes"
+                    rows={3}
+                    className={classNames(
+                      color,
+                      `block w-full rounded-md border border-gray-300 shadow-sm sm:text-sm`
+                    )}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-5">
+          <div className="flex justify-end">
+            <button
+              onClick={handleEditUser}
+              type="button"
+              className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleSubmit}
+              className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+UsersForm.propTypes = {
+  handleEditUser: PropTypes.func.isRequired,
+};

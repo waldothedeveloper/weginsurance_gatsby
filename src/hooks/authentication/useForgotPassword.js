@@ -1,17 +1,21 @@
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import { app } from "../../utils/firebaseConfig";
 import { navigate } from "gatsby";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { useAuthState } from "../../components/shared/auth";
 import { validEmailRegex } from "./validateEmailHelper";
 
-const auth = getAuth(app);
-auth.languageCode = `es`;
-
 export const useForgotPassword = () => {
+  const { firebaseAuth } = useAuthState();
   const [email, setEmail] = useState(``);
   const [validationErrors, setValidationErrors] = useState(null);
   const [authErrors, setAuthErrors] = useState(``);
+
+  useEffect(() => {
+    if (firebaseAuth) {
+      firebaseAuth.languageCode = `es`;
+    }
+  }, [firebaseAuth]);
 
   useEffect(() => {
     if (!validEmailRegex.test(email)) {
@@ -35,7 +39,7 @@ export const useForgotPassword = () => {
     if (event) event.preventDefault();
 
     //
-    sendPasswordResetEmail(auth, email)
+    sendPasswordResetEmail(firebaseAuth, email)
       .then(() => {
         // Password reset email sent!
         navigate(`/auth/email_sent_successfully`, { state: { email: email } });

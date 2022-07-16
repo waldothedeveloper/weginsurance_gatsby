@@ -1,7 +1,7 @@
 import { Loader } from "./loader";
 import PropTypes from "prop-types";
 import React from "react";
-import { isBrowser } from "../../utils/firebaseConfig";
+import { isBrowser } from "../../utils/windowUndefined";
 import { navigate } from "gatsby";
 import { useAuthState } from "../shared/auth";
 

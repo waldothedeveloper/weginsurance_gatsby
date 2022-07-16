@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { UserAddIcon } from "@heroicons/react/solid";
-export const SearchUsers = ({ newUser }) => (
+export const SearchUsers = ({ newUser, chat }) => (
   <div className="inline-grid w-full grid-cols-4 items-center">
-    <div className="col-span-3 my-2">
+    <div className={!chat ? `col-span-3 my-2` : ` col-span-4 my-2`}>
       <input
         type="text"
         name="name"
@@ -12,16 +12,19 @@ export const SearchUsers = ({ newUser }) => (
         placeholder="Buscar..."
       />
     </div>
-    <button
-      onClick={() => newUser(true)}
-      type="button"
-      className="items-right col-span-1 inline-flex justify-self-center p-2 text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
-    >
-      <UserAddIcon className="h-6 w-6 text-slate-400" />
-    </button>
+    {!chat && (
+      <button
+        onClick={() => newUser(true)}
+        type="button"
+        className="items-right col-span-1 inline-flex justify-self-center p-2 text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+      >
+        <UserAddIcon className="h-6 w-6 text-slate-400" />
+      </button>
+    )}
   </div>
 );
 
 SearchUsers.propTypes = {
-  newUser: PropTypes.func.isRequired,
+  newUser: PropTypes.func,
+  chat: PropTypes.bool,
 };

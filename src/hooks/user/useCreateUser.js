@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { createUser } from "../../utils/fireStoreMethods";
 import { nanoid } from "nanoid";
+import { useCreateUserInDB } from "../../utils/fireStoreMethods";
 import { userSchema } from "../../utils/userSchema";
 import { validate } from "../../utils/userValidation";
 
@@ -9,6 +9,7 @@ export const useCreateUser = () => {
   const [values, setValues] = useState({ ...userSchema, id: nanoid() });
   const [errors, setErrors] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { createUser } = useCreateUserInDB();
 
   // validate errors
   useEffect(() => {
@@ -27,7 +28,7 @@ export const useCreateUser = () => {
       });
     }
     setIsSubmitting(false);
-  }, [errors, isSubmitting, values]);
+  }, [errors, isSubmitting, values, createUser]);
 
   const handleChange = (event) => {
     if (event && event.target) {

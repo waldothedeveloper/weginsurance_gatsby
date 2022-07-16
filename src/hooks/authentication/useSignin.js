@@ -1,13 +1,12 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 
-import { app } from "../../utils/firebaseConfig";
 import { navigate } from "gatsby";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAuthState } from "../../components/shared/auth";
 import { validEmailRegex } from "./validateEmailHelper";
 
-const auth = getAuth(app);
-
 export const useSignIn = () => {
+  const { firebaseAuth } = useAuthState();
   const [email, setEmail] = useState(``);
   const [password, setPassword] = useState(``);
   const [validationErrors, setValidationErrors] = useState(null);
@@ -35,11 +34,8 @@ export const useSignIn = () => {
   const handleSubmit = (event) => {
     if (event) event.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, password)
-      // eslint-disable-next-line no-unused-vars
-      .then((userCredential) => {
-        // const user = userCredential.user;
-        // console.log(`user: `, user);
+    signInWithEmailAndPassword(firebaseAuth, email, password)
+      .then(() => {
         // ! redirect to admin page
         navigate(`/admin/dashboard`);
       })

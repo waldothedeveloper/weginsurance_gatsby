@@ -1,6 +1,7 @@
+import React, { Fragment } from "react";
+
 import { DetailsProfileHeader } from "./detailsProfileHeader";
 import PropTypes from "prop-types";
-import React from "react";
 import { Transition } from "@headlessui/react";
 import { UserDetailsTabs } from "./tabs";
 import { UserScreenDetails } from "./detailScreen";
@@ -17,6 +18,7 @@ export const UserDetails = ({
   return (
     <Transition
       show={true}
+      as={Fragment}
       enter="transition-opacity duration-300 ease-in"
       enterFrom="opacity-0"
       enterTo="opacity-100"
@@ -24,7 +26,7 @@ export const UserDetails = ({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <article>
+      <article className="h-[75vh] flex-none">
         {/* Profile header */}
         <DetailsProfileHeader
           currUser={selectedUser}

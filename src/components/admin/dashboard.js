@@ -15,7 +15,7 @@ const Dashboard = () => {
   const { module, handleModuleSwitch } = useSwitcher();
 
   return (
-    <div>
+    <div className="flex h-screen min-h-screen flex-col">
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
