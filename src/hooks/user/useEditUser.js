@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { updateUser } from "../../utils/fireStoreMethods";
+import { useUpdateUser } from "../../utils/fireStoreMethods";
 import { validate } from "../../utils/userValidation";
 
 //
@@ -8,12 +8,14 @@ export const useEditUser = (selectedUser, handleUpdatedUser) => {
   const [userToEdit, setUserToEdit] = useState({});
   const [editUserErrors, setEditUserErrors] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { updateUser } = useUpdateUser();
 
   // watch out for when the user is selected
   useEffect(() => {
     if (selectedUser) {
       setUserToEdit(selectedUser);
     }
+    return () => setUserToEdit({});
   }, [selectedUser]);
 
   // validate editUserErrors
@@ -21,6 +23,8 @@ export const useEditUser = (selectedUser, handleUpdatedUser) => {
     if (Object.keys(userToEdit).length > 0) {
       setEditUserErrors(validate(userToEdit));
     }
+
+    return () => setEditUserErrors([]);
   }, [userToEdit]);
 
   useEffect(() => {
@@ -33,7 +37,7 @@ export const useEditUser = (selectedUser, handleUpdatedUser) => {
       });
     }
     setIsSubmitting(false);
-  }, [editUserErrors, isSubmitting, userToEdit, handleUpdatedUser]);
+  }, [editUserErrors, isSubmitting, userToEdit, handleUpdatedUser, updateUser]);
 
   const handleEditUserChange = (event) => {
     if (event && event.target) {

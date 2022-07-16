@@ -13,7 +13,7 @@ export const UsersDictionary = ({ users, handleSelectUser, handleUser }) => (
           className={
             users.length === 0
               ? `relative z-0 animate-pulse divide-y divide-gray-200`
-              : `relative z-0 h-full divide-y divide-gray-200 overflow-y-auto`
+              : `relative z-0 h-[45rem] divide-y divide-gray-200 overflow-y-auto`
           }
         >
           {users.map((person) => (

@@ -1,2 +1,9 @@
 import React from "react";
-export const Statistics = () => <div>I am the Statistics Component</div>;
+import { useGetAndDeleteConversations } from "../../hooks/chat/useGetAndDeleteConversations";
+export const Statistics = () => (
+  // const { data, error } = useGetAndDeleteConversations();
+  // console.log(`error: `, error);
+  // console.log(`data: `, data);
+
+  <div>I am the Statistics Component</div>
+);

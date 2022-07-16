@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import users from "../../images/undraw_people.svg";
 export const NoUsers = ({ createUser }) => (
-  <div className="flex h-full items-center justify-center text-center">
+  <div className="flex h-[82vh] items-center justify-center overflow-hidden text-center">
     <div className="mx-auto flex max-w-xs flex-col">
       <img
         src={users}

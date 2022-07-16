@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
+import PropTypes from "prop-types";
 import { UserAddIcon } from "@heroicons/react/solid";
 import { nanoid } from "nanoid";
 
-export const UserScreenLoader = () => {
+export const UserScreenLoader = ({ chat }) => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export const UserScreenLoader = () => {
   return (
     <div className="animate-pulse">
       <div className="inline-grid w-full grid-cols-4 items-center">
-        <div className="col-span-3 my-2">
+        <div className={!chat ? `col-span-3 my-2` : ` col-span-4 my-2`}>
           <input
             disabled
             type="text"
@@ -27,13 +28,15 @@ export const UserScreenLoader = () => {
             className="block w-full rounded-full border-slate-600 bg-slate-600 px-4 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm"
           />
         </div>
-        <button
-          disabled={true}
-          type="button"
-          className="items-right col-span-1 inline-flex justify-self-center p-2 text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
-        >
-          <UserAddIcon className="h-6 w-6 text-slate-600" />
-        </button>
+        {!chat && (
+          <button
+            disabled={true}
+            type="button"
+            className="items-right col-span-1 inline-flex justify-self-center p-2 text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+          >
+            <UserAddIcon className="h-6 w-6 text-slate-600" />
+          </button>
+        )}
       </div>
       <nav aria-label="Directory">
         <ul
@@ -61,4 +64,8 @@ export const UserScreenLoader = () => {
       </nav>
     </div>
   );
+};
+
+UserScreenLoader.propTypes = {
+  chat: PropTypes.bool,
 };
