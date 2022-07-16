@@ -24,7 +24,7 @@ export const useSendAndReceiveMessages = (selectedConversation) => {
           });
         })
         .catch((err) => {
-          console.log(`Couldn't not fetch messages IMPLEMENT RETRY`, err);
+          // console.log(`Couldn't not fetch messages IMPLEMENT RETRY`, err);
           setConversationMessage((oldData) => {
             return {
               ...oldData,
