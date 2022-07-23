@@ -16,15 +16,8 @@ export const Chat = () => {
   const { users } = useReadUsers();
   const { participantInfo, handleParticipantInfo } = useSelectUserToChat();
 
-  const {
-    statusString,
-    newMessage,
-    messages,
-    handleChange,
-    handleSubmit,
-    deliveryReceipt,
-    allDelivered,
-  } = useConfigureChat(participantInfo);
+  const { statusString, messages, newMessage, handleChange, handleSubmit } =
+    useConfigureChat(participantInfo);
 
   return (
     <SharedScreen
@@ -55,8 +48,6 @@ export const Chat = () => {
       rightPanel={
         statusString === `You are connected.` ? (
           <ChatWall
-            deliveryReceipt={deliveryReceipt}
-            allDelivered={allDelivered}
             messages={messages}
             handleChange={handleChange}
             handleSubmit={handleSubmit}

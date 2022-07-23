@@ -15,7 +15,6 @@ export const useEditUser = (selectedUser, handleUpdatedUser) => {
     if (selectedUser) {
       setUserToEdit(selectedUser);
     }
-    return () => setUserToEdit({});
   }, [selectedUser]);
 
   // validate editUserErrors
@@ -23,8 +22,6 @@ export const useEditUser = (selectedUser, handleUpdatedUser) => {
     if (Object.keys(userToEdit).length > 0) {
       setEditUserErrors(validate(userToEdit));
     }
-
-    return () => setEditUserErrors([]);
   }, [userToEdit]);
 
   useEffect(() => {

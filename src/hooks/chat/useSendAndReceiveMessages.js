@@ -1,5 +1,7 @@
+import { $createParagraphNode, $getRoot } from "lexical";
 import { useEffect, useState } from "react";
 
+//
 export const useSendAndReceiveMessages = (selectedConversation) => {
   const [conversationMessage, setConversationMessage] = useState({
     newMessage: ``,
@@ -9,6 +11,7 @@ export const useSendAndReceiveMessages = (selectedConversation) => {
   });
 
   const { newMessage, messages, newMessageSent } = conversationMessage;
+  // console.log(`newMessage: `, newMessage);
 
   useEffect(() => {
     if (selectedConversation) {
@@ -54,7 +57,6 @@ export const useSendAndReceiveMessages = (selectedConversation) => {
     }
 
     return () => {
-      // console.log(`unmounting useSendAndReceiveMessages`);
       setConversationMessage((oldData) => {
         return {
           ...oldData,
@@ -67,37 +69,50 @@ export const useSendAndReceiveMessages = (selectedConversation) => {
     };
   }, [selectedConversation]);
 
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setConversationMessage((oldData) => {
-      return {
-        ...oldData,
-        newMessage: value,
-      };
+  const handleChange = (editorState) => {
+    editorState.read(() => {
+      const root = $getRoot();
+
+      if (root.getTextContent().length > 0) {
+        setConversationMessage((oldData) => {
+          return {
+            ...oldData,
+            newMessage: root.getTextContent(),
+          };
+        });
+      }
     });
   };
 
   const sendMessage = async () => {
-    if (selectedConversation && newMessage) {
+    if (selectedConversation && newMessage && newMessage.length > 0) {
       return await selectedConversation.sendMessage(newMessage);
-    } else {
-      throw new Error(`No new message to send`);
     }
+
+    return null;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, editor) => {
     event.preventDefault();
 
     sendMessage()
-      .then(() =>
+      .then(() => {
+        editor.update(() => {
+          const root = $getRoot();
+          const paragraph = $createParagraphNode();
+          root.clear();
+          root.append(paragraph);
+        });
+
+        //
         setConversationMessage((oldData) => {
           return {
             ...oldData,
             newMessage: ``,
             newMessageSent: true,
           };
-        })
-      )
+        });
+      })
       .catch((err) => {
         console.log(`Couldn't send message`, err);
       });

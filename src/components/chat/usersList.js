@@ -3,7 +3,6 @@ import React from "react";
 import { SearchUsers } from "../users/search";
 import { formatPhoneNumber } from "../../utils/formatPhoneNumber";
 
-//
 export const UsersList = ({ users, chooseParticipant }) => (
   <>
     <SearchUsers chat={true} />
@@ -24,14 +23,14 @@ export const UsersList = ({ users, chooseParticipant }) => (
               </div>
               <div className="min-w-0 flex-1">
                 <button
-                  onClick={() => {
+                  onClick={() =>
                     chooseParticipant({
                       phone: person.phone,
                       sid: person.sid || null,
                       refDocumentId: person.refDocumentId,
                       chat_service_sid: person.chat_service_sid || null,
-                    });
-                  }}
+                    })
+                  }
                   className="focus:outline-none"
                 >
                   {/* Extend touch target to entire panel */}

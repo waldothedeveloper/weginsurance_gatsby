@@ -9,11 +9,6 @@ export const useGetUserFullName = (currUser) => {
       setName(`${currUser.first_name} ${currUser.lastname}`);
       setNameInitials(`${currUser.first_name[0]}${currUser.lastname[0]}`);
     }
-
-    return () => {
-      setName(``);
-      setNameInitials(``);
-    };
   }, [currUser]);
 
   return { name, nameInitials };

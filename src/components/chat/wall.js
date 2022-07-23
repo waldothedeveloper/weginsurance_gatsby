@@ -1,8 +1,8 @@
-import { DoubleCheck, SingleCheck } from "./singleAndDoubleCheck";
 import React, { useEffect, useRef } from "react";
 
+import { CheckIcon } from "@heroicons/react/outline";
+import { Editor } from "../shared/rich_text_composer/editor";
 import { FadeInWhenVisible } from "../shared/fadeInWhenVisible";
-import { MessageForm } from "./messageForm";
 import PropTypes from "prop-types";
 import { ZeroMessages } from "./zeroMessages";
 
@@ -19,16 +19,10 @@ export const ChatWall = ({
   handleSubmit,
   newMessage,
   messages,
-  deliveryReceipt,
-  allDelivered,
 }) => {
   const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: `smooth`,
-      block: `end`,
-      inline: `nearest`,
-    });
+    messagesEndRef.current?.scrollIntoView({ behavior: `smooth` });
   };
 
   useEffect(() => {
@@ -37,8 +31,8 @@ export const ChatWall = ({
 
   return (
     <FadeInWhenVisible>
-      <div className="flex flex-col bg-stone-50">
-        <div className="h-[77vh] flex-none overflow-y-scroll px-6 py-6">
+      <div className="flex flex-col">
+        <div className="h-[78vh] flex-none overflow-y-scroll px-6">
           <ul>
             {Array.isArray(messages) && messages.length > 0 ? (
               messages.map((m) => {
@@ -50,21 +44,8 @@ export const ChatWall = ({
                         <div className="mt-2 flex justify-end text-xs text-stone-100">
                           {m.dateCreated.toLocaleString(`es-ES`, options)}
                         </div>
-                        <div className="flex items-center justify-end text-xs font-light text-slate-100">
-                          {allDelivered ? (
-                            <DoubleCheck />
-                          ) : (
-                            <span className="flex items-center justify-center">
-                              {Array.isArray(deliveryReceipt) &&
-                              deliveryReceipt.filter(
-                                (elem) => elem.value[0]?.messageSid === m.sid
-                              )[0]?.value[0]?.status === `delivered` ? (
-                                <DoubleCheck />
-                              ) : (
-                                <SingleCheck />
-                              )}
-                            </span>
-                          )}
+                        <div className="mt-1 flex items-center justify-end text-xs font-light text-slate-100">
+                          <CheckIcon className="h-5 w-5 text-slate-100" />
                         </div>
                       </div>
                       <div ref={messagesEndRef} />
@@ -91,11 +72,8 @@ export const ChatWall = ({
             )}
           </ul>
         </div>
-        <MessageForm
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          newMessage={newMessage}
-        />
+
+        <Editor handleChange={handleChange} handleSubmit={handleSubmit} />
       </div>
     </FadeInWhenVisible>
   );
@@ -106,6 +84,4 @@ ChatWall.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   newMessage: PropTypes.string.isRequired,
-  deliveryReceipt: PropTypes.oneOfType([PropTypes.array, undefined]),
-  allDelivered: PropTypes.bool.isRequired,
 };
