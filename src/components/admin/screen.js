@@ -13,8 +13,6 @@ export const Screen = ({ module }) => {
   useEffect(() => {
     const currentModule = module.filter((item) => item.current)[0].name;
     setComponentToRender(currentModule);
-
-    return () => setComponentToRender(`Dashboard`);
   }, [module]);
 
   switch (componentToRender) {

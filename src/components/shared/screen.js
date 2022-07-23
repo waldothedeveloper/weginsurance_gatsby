@@ -8,7 +8,7 @@ export const SharedScreen = ({
     <div className="col-span-4 h-full rounded-lg border-2 border-solid border-gray-100 py-6 lg:px-4">
       {LeftPanel}
     </div>
-    <div className="col-span-8 h-full rounded-lg border-2 border-solid border-gray-100 py-6 lg:px-4">
+    <div className="col-span-8 h-full rounded-lg border-2 border-solid border-gray-100 pt-6 lg:px-1">
       {RightPanel}
     </div>
   </div>

@@ -34,11 +34,17 @@ export const chatFetchers = (userInfo) => {
       }),
     }).then((res) => res.json());
 
-  const checkDeliveryReceipt = (sid, messageSids) =>
-    fetch(`/api/sms_delivery_update`, {
+  const checkDeliveryReceipt = (url, messages, userInfo) => {
+    const { sid } = userInfo;
+    const messageSids = messages
+      .filter((m) => m.author === `weg_insurance`)
+      .map((m) => m.sid);
+
+    return fetch(`/api/sms_delivery_update`, {
       method: `POST`,
       body: JSON.stringify({ messageSids, userSID: sid }),
     }).then((res) => res.json());
+  };
 
   return {
     createNewConversation,

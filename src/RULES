@@ -1,0 +1,17 @@
+1. TO CREATE NEW CONVERSATIONS (SMS & CHAT USERS)
+
+- Create the New Conversation -> /api/create_conversation = this returns the chatServiceSid `ISXXXXXXXXX`
+- Add the SMS participant -> /api/add_sms_participant
+- Add the chat participant -> /api/add_chat_participant
+- Create the token that needs the identity of the newly created chat participant (e.g. testPineapple)
+
+2. TO READ AN EXISTING CONVERSATION (SMS & CHAT USERS)
+
+- Read the Existing Conversation -> /api/read_conversation
+- Get a list of chat participants -> /api/get_chat_participants (usually should be just one which identity is: weg_insurance)
+- Create the token that this chat participant needs -> /api/create_access_token
+
+<!--  -->
+
+1. /api/create_conversation
+   This API call will return this => {chatServiceSid, sid, status}
