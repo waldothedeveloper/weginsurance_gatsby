@@ -73,6 +73,11 @@ export const useInitializeConversationClient = (token) => {
           });
       });
 
+      client.on(`conversationJoined`, (conversation) => {
+        console.log(`do I EVER GET HERE?`, conversation);
+        // setConversations((oldData) => [...oldData, conversation]);
+      });
+
       /*
       NEED TO LEARN HOW TO DO THIS PROPERLY
       */

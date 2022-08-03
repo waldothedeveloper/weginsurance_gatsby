@@ -9,14 +9,14 @@ export const useAddSMSParticipant = (
     () => {
       if (
         createConversation &&
-        createConversation.sid &&
+        createConversation.sms_sid &&
         !conversationCreated
       ) {
-        return `/api/add_sms_participant`;
+        return `/api/add_sms_or_whatsapp_participant`;
       }
       return null;
     },
-    (url) => addSMSParticipant(url, createConversation?.sid),
+    (url) => addSMSParticipant(url, createConversation?.sms_sid),
     { revalidateOnFocus: false, revalidateOnReconnect: false }
   );
 

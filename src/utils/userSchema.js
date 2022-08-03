@@ -15,6 +15,10 @@ export const userSchema = {
   insurance_company: ``,
   plan: ``,
   notes: ``,
-  chat_service_sid: ``,
+  sms_chat_service_sid: ``,
+  whatsapp_chat_service_sid: ``,
+  sms_sid: ``,
+  whatsapp_sid: ``,
+  chat_mode: `sms`,
   identity: ``,
 };

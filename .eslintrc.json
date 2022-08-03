@@ -84,14 +84,6 @@
       "error",
       "always",
       { "markers": ["/"], "exceptions": ["*", "+"] }
-    ],
-    "camelcase": [
-      "error",
-      {
-        "properties": "never",
-        "ignoreDestructuring": true,
-        "allow": ["^unstable_"]
-      }
     ]
   },
   "settings": {

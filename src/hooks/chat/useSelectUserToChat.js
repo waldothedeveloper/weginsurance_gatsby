@@ -3,33 +3,23 @@ import { e164PhoneNumber } from "../../utils/e164phoneNumberFormat";
 import { useState } from "react";
 
 export const useSelectUserToChat = () => {
-  const [participantInfo, setParticipantInfo] = useState({
-    requestConversation: false,
-  });
+  const [participantInfo, setParticipantInfo] = useState({});
 
   const handleParticipantInfo = ({
     phone,
-    sid,
+    sms_sid,
     refDocumentId,
-    chat_service_sid,
+    sms_chat_service_sid,
+    chat_mode,
   }) => {
-    const oldSID = participantInfo.sid || null;
-
-    if (oldSID && sid && oldSID !== sid) {
+    {
       setParticipantInfo({
-        requestConversation: true,
+        // requestConversation: false,
         phone: e164PhoneNumber(phone),
-        sid,
+        sms_sid,
         refDocumentId,
-        chat_service_sid,
-      });
-    } else {
-      setParticipantInfo({
-        requestConversation: false,
-        phone: e164PhoneNumber(phone),
-        sid,
-        refDocumentId,
-        chat_service_sid,
+        sms_chat_service_sid,
+        chat_mode,
       });
     }
   };

@@ -1,18 +1,19 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useJoinAndLeaveConversations = (client) => {
   const [conversations, setConversations] = useState([]);
+  // console.log(`conversations: `, conversations);
 
-  useMemo(() => {
-    let active = true;
-    if (client && active) {
+  useEffect(() => {
+    if (client) {
       client.on(`connectionError`, (error) => {
-        // console.log(`CONVERSATION JOIN & LEAVE ERROR: `, error);
+        console.log(`CONVERSATION JOIN & LEAVE ERROR: `, error);
       });
 
-      client.on(`conversationJoined`, (conversation) => {
-        setConversations((oldData) => [...oldData, conversation]);
-      });
+      // client.on(`conversationJoined`, (conversation) => {
+      //   console.log(`do I EVER GET HERE?`, conversation);
+      //   setConversations((oldData) => [...oldData, conversation]);
+      // });
 
       client.on(`conversationLeft`, (thisConversation) => {
         setConversations((oldData) => [
@@ -23,7 +24,6 @@ export const useJoinAndLeaveConversations = (client) => {
 
     return () => {
       setConversations([]);
-      active = false;
     };
   }, [client]);
 

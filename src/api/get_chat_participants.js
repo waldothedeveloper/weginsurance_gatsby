@@ -10,14 +10,14 @@ const handler = (req, res) => {
         .json({ message: `This endpoint requires a POST request!` });
     }
 
-    const { sid } = JSON.parse(req.body);
+    const { sms_sid } = JSON.parse(req.body);
 
-    if (!sid) {
+    if (!sms_sid) {
       return res.status(400).json({ message: `SID is required!` });
     }
 
     return client.conversations
-      .conversations(sid)
+      .conversations(sms_sid)
       .participants.list({ limit: 2 })
       .then((participants) => {
         const arrOfParticipants = participants.map((p) => p);

@@ -17,8 +17,6 @@ const handler = (req, res) => {
 
     // Used specifically for creating Chat tokens
     const { serviceSid, identity } = JSON.parse(req.body);
-    // console.log(`serviceSid on Create Access Token: `, serviceSid);
-    // console.log(`identity  on Create Access Token: `, identity);
 
     if (!serviceSid || !identity) {
       return res
@@ -29,7 +27,7 @@ const handler = (req, res) => {
     // Create a "grant" which enables a client to use Chat as a given user,
     // on a given device
     const chatGrant = new ChatGrant({
-      serviceSid: serviceSid,
+      serviceSid,
     });
 
     // Create an access token which we will sign and return to the client,
@@ -38,7 +36,7 @@ const handler = (req, res) => {
       twilioAccountSid,
       twilioApiKey,
       twilioApiSecret,
-      { identity: identity, ttl: 72000 }
+      { identity, ttl: 72000 }
     );
 
     token.addGrant(chatGrant);
@@ -46,7 +44,7 @@ const handler = (req, res) => {
     // Serialize the token to a JWT string
     return res.status(200).json({ token: token.toJwt(), status: 200 });
   } catch (err) {
-    console.log(`err: `, err);
+    console.log(`err CREATING A TOKEN FOR THE CLIENT: `, err);
     return res.status(500).json({
       message: `Our system has detected an unexpected error.`,
       status: err.status,

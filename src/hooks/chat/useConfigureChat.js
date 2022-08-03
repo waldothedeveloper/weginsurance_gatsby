@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
 import { useMemo, useState } from "react";
 
 import { chatFetchers } from "../../utils/chatFetchers";
-import { useAddSMSParticipant } from "./useAddSMSParticipant";
+import { useAddChatParticipant } from "./useAddChatParticipant";
+import { useAddSMSOrWhatsAppParticipant } from "./useAddSMSOrWhatsAppParticipant";
 import { useCreateAccessToken } from "./useCreateAccessToken";
 import { useCreateConversation } from "./useCreateConversation";
 import { useDeliveryReceipt } from "./useDeliveryReceipt";
@@ -16,18 +18,21 @@ export const useConfigureChat = (userInfo) => {
   const [newOrGetConversationData, setCreateOrGetConversation] = useState({
     token: null,
     selectedConversationSid: null,
-    conversationCreated: false,
+    smsConversationCreated: false,
+    whatsappConversationCreated: false,
   });
 
-  const { conversationCreated, token } = newOrGetConversationData;
+  const { smsConversationCreated, whatsappConversationCreated, token } =
+    newOrGetConversationData;
 
-  const { refDocumentId } = userInfo || null;
+  const { refDocumentId, chat_mode } = userInfo || null;
 
   const {
     createNewConversation,
-    addSMSParticipant,
+    addSmsOrWhatsAppParticipant,
     createTokenForChat,
     checkDeliveryReceipt,
+    addChatParticipant,
   } = chatFetchers(userInfo);
 
   /*
@@ -37,25 +42,26 @@ export const useConfigureChat = (userInfo) => {
   const { createConversation } = useCreateConversation(
     userInfo,
     createNewConversation,
-    conversationCreated
+    smsConversationCreated,
+    whatsappConversationCreated
   );
 
-  const { addSMSParticipantData } = useAddSMSParticipant(
-    createConversation,
-    conversationCreated,
-    addSMSParticipant
-  );
+  const { addSMSorWhatsAppParticipantData, smsorWhatsAppParticipantError } =
+    useAddSMSOrWhatsAppParticipant(
+      createConversation,
+      addSmsOrWhatsAppParticipant,
+      chat_mode
+    );
 
-  /*
-  we are getting the token from state instead of the tokenData hook, but this is on purpose to be able to refresh the token on the useCreateAccessToken hook when is about to expire or it already expired
-  */
+  const { addChatParticipantData, addChatParticipantError } =
+    useAddChatParticipant(createConversation, addChatParticipant);
 
   const { conversationData } = useInitializeConversationClient(token);
   const { client, statusString } = conversationData;
 
-  const { tokenData } = useCreateAccessToken(
+  const { tokenData, tokenError } = useCreateAccessToken(
     createConversation,
-    conversationCreated,
+    smsConversationCreated,
     createTokenForChat,
     userInfo
   );
@@ -77,7 +83,7 @@ export const useConfigureChat = (userInfo) => {
   );
 
   /*
-  update the firebase user with the sid & chatServiceSid after creating 
+  update the firebase user with the sms_sid & chatServiceSid after creating 
   a new conversation only if a successful new conversation has been created
   */
   useMemo(() => {
@@ -86,34 +92,58 @@ export const useConfigureChat = (userInfo) => {
       active &&
       refDocumentId &&
       createConversation &&
-      createConversation.status === 200 &&
-      tokenData &&
-      tokenData.status === 200
+      createConversation.status === 200
     ) {
-      updateUser({
-        refDocumentId: refDocumentId,
-        sid: createConversation.sid,
-        chat_service_sid: createConversation.chatServiceSid,
-      })
-        .then(() => {
-          // console.log(`User updated successfully!`);
-          setCreateOrGetConversation((oldData) => {
-            return {
-              ...oldData,
-              conversationCreated: true,
-              token: tokenData.token,
-            };
-          });
+      if (chat_mode === `sms`) {
+        updateUser({
+          refDocumentId: refDocumentId,
+          sms_sid: createConversation.sid,
+          sms_chat_service_sid: createConversation.chatServiceSid,
         })
-        .catch((err) =>
-          // if the user is NOT updated we have a problem
-          // make sure you handle this error
-          console.log(`Error trying to update the firebase user`, err)
-        );
+          .then(() => {
+            console.log(`SMS User updated successfully!`);
+            setCreateOrGetConversation((oldData) => {
+              return {
+                ...oldData,
+                smsConversationCreated: true,
+                // token: tokenData.token,
+              };
+            });
+          })
+          .catch((err) =>
+            // if the user is NOT updated we have a problem
+            // make sure you handle this error
+            console.log(`Error trying to update the firebase user`, err)
+          );
+      }
+
+      if (chat_mode === `whatsapp`) {
+        //
+        updateUser({
+          refDocumentId: refDocumentId,
+          whatsapp_sid: createConversation.sid,
+          whatsapp_chat_service_sid: createConversation.chatServiceSid,
+        })
+          .then(() => {
+            console.log(`WhatsApp User updated successfully!`);
+            setCreateOrGetConversation((oldData) => {
+              return {
+                ...oldData,
+                whatsappConversationCreated: true,
+                // token: tokenData.token,
+              };
+            });
+          })
+          .catch((err) =>
+            // if the user is NOT updated we have a problem
+            // make sure you handle this error
+            console.log(`Error trying to update the firebase user`, err)
+          );
+      }
     }
 
     return () => (active = false);
-  }, [createConversation, refDocumentId, tokenData, updateUser]);
+  }, [createConversation, refDocumentId, updateUser, chat_mode]);
 
   useMemo(() => {
     let active = true;
@@ -121,7 +151,8 @@ export const useConfigureChat = (userInfo) => {
       setCreateOrGetConversation((oldData) => {
         return {
           ...oldData,
-          conversationCreated: false,
+          smsConversationCreated: false,
+          whatsappConversationCreated: false,
         };
       });
     }

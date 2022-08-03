@@ -10,7 +10,7 @@ const handler = (req, res) => {
         .json({ message: `This endpoint requires a POST request!` });
     }
 
-    const chatSID = req.body.sid;
+    const chatSID = req.body.sms_sid;
 
     if (!chatSID) {
       return res.status(400).json({ message: `Chat SID is required!` });

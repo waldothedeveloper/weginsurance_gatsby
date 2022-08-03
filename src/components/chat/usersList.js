@@ -1,8 +1,9 @@
+import { ModeButtons } from "./modeButtons";
 import PropTypes from "prop-types";
 import React from "react";
 import { SearchUsers } from "../users/search";
 import { formatPhoneNumber } from "../../utils/formatPhoneNumber";
-
+//
 export const UsersList = ({ users, chooseParticipant }) => (
   <>
     <SearchUsers chat={true} />
@@ -14,7 +15,7 @@ export const UsersList = ({ users, chooseParticipant }) => (
       >
         {users.map((person) => (
           <li key={person.id}>
-            <div className="relative flex items-center space-x-3 rounded px-6 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-sky-500 hover:bg-slate-100 focus:rounded-full">
+            <div className="relative flex items-center space-x-3 rounded px-6 py-5 hover:bg-slate-100 focus:rounded-full">
               <div className="flex-shrink-0">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-800 text-lg font-medium text-white">
                   {person.first_name[0]}
@@ -22,26 +23,18 @@ export const UsersList = ({ users, chooseParticipant }) => (
                 </div>
               </div>
               <div className="min-w-0 flex-1">
-                <button
-                  onClick={() =>
-                    chooseParticipant({
-                      phone: person.phone,
-                      sid: person.sid || null,
-                      refDocumentId: person.refDocumentId,
-                      chat_service_sid: person.chat_service_sid || null,
-                    })
-                  }
-                  className="focus:outline-none"
-                >
-                  {/* Extend touch target to entire panel */}
-                  <span className="absolute inset-0" aria-hidden="true" />
+                <div className="focus:outline-none">
                   <p className="text-sm font-medium text-gray-900">
                     {person.first_name} {person.lastname}
                   </p>
                   <p className="truncate text-sm text-gray-500">
                     {formatPhoneNumber(person.phone)}
                   </p>
-                </button>
+                </div>
+                <ModeButtons
+                  person={person}
+                  chooseParticipant={chooseParticipant}
+                />
               </div>
             </div>
           </li>

@@ -9,19 +9,18 @@ const handler = (req, res) => {
         .status(404)
         .json({ message: `This endpoint requires a POST request!` });
     }
-    // console.log(`REQ BODY`, req.body);
+
     const participantPhoneNumber = req.body.phone;
 
     if (!participantPhoneNumber) {
       return res.status(400).json({ message: `Phone number is required!` });
     }
-    // first create it
+
     return client.conversations.conversations
       .create({
-        friendlyName: `First SMS WegInsurance Conversation`,
+        friendlyName: `WegInsurance Conversation with ${participantPhoneNumber}`,
       })
       .then((conversation) =>
-        // console.log(`NEW CONVERSATION: `, conversation);
         res.status(200).json({
           sid: conversation.sid,
           chatServiceSid: conversation.chatServiceSid,

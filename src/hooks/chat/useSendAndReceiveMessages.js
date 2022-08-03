@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 //
 export const useSendAndReceiveMessages = (selectedConversation) => {
+  // console.log(`selectedConversation: `, selectedConversation);
   const [conversationMessage, setConversationMessage] = useState({
     newMessage: ``,
     messages: [],
@@ -11,7 +12,6 @@ export const useSendAndReceiveMessages = (selectedConversation) => {
   });
 
   const { newMessage, messages, newMessageSent } = conversationMessage;
-  // console.log(`newMessage: `, newMessage);
 
   useEffect(() => {
     if (selectedConversation) {
@@ -39,7 +39,9 @@ export const useSendAndReceiveMessages = (selectedConversation) => {
       const addMessageToConversation = (message) =>
         setConversationMessage((oldState) => {
           const { messages } = oldState;
-          const currMessage = messages.find((m) => m.sid === message.sid);
+          const currMessage = messages.find(
+            (m) => m.sms_sid === message.sms_sid
+          );
 
           if (!currMessage) {
             return {

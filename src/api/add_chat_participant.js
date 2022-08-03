@@ -10,16 +10,20 @@ const handler = (req, res) => {
         .json({ message: `This endpoint requires a POST request!` });
     }
 
-    const { sid } = JSON.parse(req.body);
+    const { sms_sid, identity } = JSON.parse(req.body);
 
-    if (!sid) {
+    if (!sms_sid) {
       return res.status(400).json({ message: `SID is required!` });
     }
 
+    if (!identity) {
+      return res.status(400).json({ message: `Identity is required!` });
+    }
+
     return client.conversations
-      .conversations(sid)
+      .conversations(sms_sid)
       .participants.create({
-        identity: `weg_insurance`,
+        identity,
       })
       .then((data) => res.status(200).json({ data, status: 200 }))
       .catch((err) =>

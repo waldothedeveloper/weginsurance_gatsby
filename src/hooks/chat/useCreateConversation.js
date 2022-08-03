@@ -1,13 +1,22 @@
+/*  eslint-disable camelcase */
 import useSWR from "swr";
 
 export const useCreateConversation = (
   userInfo,
   createNewConversation,
-  conversationCreated
+  smsConversationCreated,
+  whatsappConversationCreated
 ) => {
-  const { sid, requestConversation } = userInfo;
+  const { sms_sid, whatsapp_sid, chat_mode } = userInfo;
+
   const { data: createConversation } = useSWR(() => {
-    if (requestConversation && sid === null && !conversationCreated) {
+    if (chat_mode === `sms` && !sms_sid && !smsConversationCreated) {
+      return `/api/create_conversation`;
+    } else if (
+      chat_mode === `whatsapp` &&
+      !whatsapp_sid &&
+      !whatsappConversationCreated
+    ) {
       return `/api/create_conversation`;
     }
     return null;
